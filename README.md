@@ -20,6 +20,9 @@ pip install geopy
 pip install timezonefinder
 pip install pytest
 
+2. Test command:
+<!-- use -m flag to ensure correct env -->
+python -m pytest tests/test_main.py
 ## 🚀 Usage
 
 ```bash
