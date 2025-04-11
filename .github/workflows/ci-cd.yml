@@ -1,0 +1,53 @@
+name: Python CI/CD
+
+# Trigger the workflow on push and pull requests
+on:
+  push:
+    branches:
+      - main  # Replace with your branch name
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Job for testing
+  test:
+    runs-on: ubuntu-latest  # or use 'windows-latest' or 'macos-latest'
+    
+    steps:
+    # Step 1: Check out the code
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    # Step 2: Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'  # Replace with your preferred Python version
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Step 4: Run tests (using pytest as an example)
+    - name: Run tests
+      run: |
+        pytest --maxfail=1 --disable-warnings -q
+    
+  # Job for deployment (optional)
+  deploy:
+    needs: test  # Only run this after the test job is successful
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Deploy to production
+      run: |
+        # Add your deployment script or commands here
+        echo "Deploying to production..."
+        # Example for deploying to a server via SSH (ensure SSH keys are set in secrets)
+        # ssh -i ${{ secrets.SSH_PRIVATE_KEY }} user@host 'bash -s' < deploy.sh

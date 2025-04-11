@@ -1,6 +1,5 @@
 from datetime import datetime
 import pytz
-#print(pytz.all_timezones)
 from timezonefinder import TimezoneFinder
 from geopy.geocoders import Nominatim
 
